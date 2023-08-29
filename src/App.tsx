@@ -12,17 +12,17 @@ import { IFilmDetail } from './shared/types'
 import { options } from './constants'
 import { useSort, useFilter, useFilms } from './hooks'
 function App() {
-  const [selectedEpisode, setSelectedEpisode] = useState<IFilmDetail>()
+  const [selectedFilm, setSelectedFilm] = useState<IFilmDetail | null>(null)
   const { isLoading, data: films, error } = useFilms()
   const [searchTerm, setSearchTerm] = useState('')
   const { sortedData, sortData } = useSort(films, 'episode_id')
   const { filteredList } = useFilter(sortedData, searchTerm)
 
-  const setFilmDetails = async (selectedEpisode: any) => {
+  const setFilmDetails = async (selectedFilm: any) => {
     try {
-      const res = await getFilmDetail(selectedEpisode)
-      setSelectedEpisode({
-        ...selectedEpisode,
+      const res = await getFilmDetail(selectedFilm)
+      setSelectedFilm({
+        ...selectedFilm,
         ratings: res.Ratings,
         poster: res.Poster
       })
@@ -31,9 +31,14 @@ function App() {
     }
   }
 
-  const handleClick = (selectedEpisode: IFilmDetail) => {
-    setSelectedEpisode(selectedEpisode)
-    setFilmDetails(selectedEpisode)
+  const handleClick = (film: IFilmDetail) => {
+    if(film.episode_id === selectedFilm?.episode_id) {
+      setSelectedFilm(null)
+      return
+    }
+    
+    setSelectedFilm(film)
+    setFilmDetails(film)
   }
 
   const handleSortChange = (selectedValue: string) => {
@@ -59,9 +64,9 @@ function App() {
       <Films
         onClick={handleClick}
         films={filteredList}
-        selectedFilm={selectedEpisode}
+        selectedFilm={selectedFilm}
       />
-      <FilmDetails episode={selectedEpisode} />
+      <FilmDetails film={selectedFilm} />
     </div>
   )
 }

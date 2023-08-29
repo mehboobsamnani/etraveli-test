@@ -1,3 +1,3 @@
-import Filmlist from './Filmlist'
+import Filmlist from './FilmList'
 
 export default Filmlist

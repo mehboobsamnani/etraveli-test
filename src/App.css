@@ -12,22 +12,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   font-size: 14px;
-
 }
 
-.dropdown {
-  flex: 0 1 25%;
-}
-
-input {
-  flex: 0 1 74%;
-  align-self: end;
-}
-
-.filmList,
-.filmDetails {
-  margin-top: 20px;
-  flex: 0 1 50%;
+p {
+  line-height: 22px;
 }
 
 .error {
@@ -65,4 +53,12 @@ input {
 
 .clear-both {
   clear: both;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .app {
+      padding: 10px 10px;
+      margin:10px 0px;
+  }
 }

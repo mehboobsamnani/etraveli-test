@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import styles from './Dropdown.module.css'
 import { DropdownProps } from 'shared/types'
+import styles from "./Dropdown.module.css"
 
 const Dropdown = ({
   label,
@@ -16,16 +16,15 @@ const Dropdown = ({
     onChange(value)
   }
   return (
-    <div className="dropdown">
-      <label htmlFor="select-el" className={styles.combo_label}>
+    <div className={styles.dropdown}>
+      <label htmlFor="select-el" >
         {label}
       </label>
-      <div className={styles.combo}>
+      <div >
         <select
           id="select-el"
           onChange={handleOnChange}
           value={selectedValue}
-          className={styles.combo}
         >
           {options.map(({ value, label }) => (
             <option value={value} key={value}>

@@ -1,9 +1,10 @@
 import { IFilmDetail } from 'shared/types'
+import styles from "./FilmList.module.css"
 
 interface FilmListProps {
   films: IFilmDetail[]
   onClick: (film: IFilmDetail) => void
-  selectedFilm?: IFilmDetail
+  selectedFilm: IFilmDetail | null
 }
 
 const FilmList: React.FC<FilmListProps> = ({
@@ -11,13 +12,15 @@ const FilmList: React.FC<FilmListProps> = ({
   onClick,
   selectedFilm
 }) => {
+
+
   return (
-    <div className="filmList" data-testid="filmList">
+    <div className={styles.filmList} data-testid="filmList">
       {!!films.length &&
         films.map((film: IFilmDetail) => (
           <div
             className={
-              selectedFilm?.episode_id === film.episode_id ? 'active' : ''
+              `${styles.film} ${selectedFilm?.episode_id === film.episode_id ? styles.active : ''}`
             }
             onClick={() => onClick(film)}
             key={film.title}
@@ -25,7 +28,7 @@ const FilmList: React.FC<FilmListProps> = ({
           >
             <span>Episode {film.episode_id}</span>
             <span>{film.title}</span>
-            <span>{film.release_date}</span>
+            <span className={styles.release_date}>{film.release_date}</span>
           </div>
         ))}
     </div>

@@ -1,14 +1,15 @@
 import { useMemo } from 'react'
 import { IFilmDetail } from 'shared/types'
+import { romanize } from 'shared/helpers'
 import Ratings from '../Ratings'
 import Pill from 'components/Pill'
-
+import styles from "./FilmDetails.module.css"
 interface MovieDetailProps {
-  episode?: IFilmDetail
+  film: IFilmDetail | null
 }
 
-const FilmDetails: React.FC<MovieDetailProps> = ({ episode }) => {
-  const { title, opening_crawl, poster, director, ratings = [] } = episode || {}
+const FilmDetails: React.FC<MovieDetailProps> = ({ film }) => {
+  const { title, opening_crawl, poster, director, ratings = [] } = film || {}
 
   const totalScore = useMemo(() => {
     if (!ratings.length) {
@@ -28,29 +29,30 @@ const FilmDetails: React.FC<MovieDetailProps> = ({ episode }) => {
   }, [ratings])
 
   return (
-    <div className="filmDetails">
-      {!episode ? (
-        <p>Select Episode from the list to view detail.</p>
+    <div className={styles.filmDetails}>
+      {!film ? (
+        <p>Select Film from the list to view detail.</p>
       ) : (
         <>
-          <h2>{title}</h2>
+          <h2>{`Episode ${romanize(film?.episode_id)}`} - {title}</h2>
           <div>
             <img
               src={poster || 'https://placehold.co/151x230'}
               alt={title}
-              className="poster"
+              className={styles.poster}
             />
             <p>{opening_crawl}</p>
           </div>
           <p className="clear-both">Directed By: {director}</p>
+          { !!totalScore &&  
           <div
             style={{ display: 'flex' }}
             data-testid="score"
             data-score={totalScore}
           >
-            Average Rating: {totalScore && <Ratings score={totalScore} />}
-          </div>
-          <div className="meta-critics">
+            Average Rating: {<Ratings score={totalScore} />}
+          </div> }
+          <div className={styles.meta_critics}>
             {ratings.map(rating => (
               <Pill
                 key={rating.Source}

@@ -1,7 +1,9 @@
+import styles from './PageLoader.module.css'
+
 const PageLoader = () => {
   return (
-    <div className={'container'} data-testid="loader-container">
-      <div className={'loader'} data-testid="loader"></div>
+    <div className={styles.container} data-testid="loader-container">
+      <div className={styles.loader} data-testid="loader"></div>
     </div>
   )
 }
