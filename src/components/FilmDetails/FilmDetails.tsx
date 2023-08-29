@@ -41,11 +41,11 @@ const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails  }) => {
   }, [ratings])
 
   return (
-    <div className={styles.filmDetails}>
+    <div className={styles.filmDetails} >
       {!film ? (
         <p>Select Film from the list to view detail.</p>
       ) : (
-        <>
+        <div data-testid="filmDetail">
           <h2>{`Episode ${romanize(film?.episode_id)}`} - {title}</h2>
           <div>
             <img
@@ -72,7 +72,7 @@ const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails  }) => {
               />
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   )

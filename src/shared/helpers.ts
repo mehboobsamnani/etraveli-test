@@ -1,5 +1,5 @@
 export function romanize(num: number): string {
-  if(isNaN(num)) {
+  if (isNaN(num)) {
     return ''
   }
   const romanNumerals: [number, string][] = [
@@ -29,3 +29,18 @@ export function romanize(num: number): string {
 
   return result;
 }
+
+
+export const localStorageFn = {
+  getItem: (key: string) => {
+    const item = localStorage.getItem(key)
+    if (item) {
+      return JSON.parse(item)
+    }
+    return ""
+  },
+  setItem: (key: string, value: any) => {
+    localStorage.setItem(key, JSON.stringify(value))
+  },
+
+} 

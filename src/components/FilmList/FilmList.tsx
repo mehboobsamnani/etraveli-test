@@ -27,7 +27,7 @@ const FilmList: React.FC<FilmListProps> = ({
             data-testid="film"
           >
             <span>Episode {film.episode_id}</span>
-            <span>{film.title}</span>
+            <span data-testid="title">{film.title}</span>
             <span className={styles.release_date}>{film.release_date}</span>
           </div>
         ))}

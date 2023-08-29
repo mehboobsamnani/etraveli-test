@@ -12,6 +12,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   return (
     <div className={styles.search_filter}>
       <input
+        data-testid="search-input"
         placeholder="Search by title"
         type="search"
         value={searchTerm}
