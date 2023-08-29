@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
-import { getFilmDetail } from './services/api'
 import {
   Dropdown,
   FilmDetails,

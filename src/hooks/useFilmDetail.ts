@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IFilmDetail } from "../shared/types";
+import { getFilmDetail } from '../services/api';
 
 const useFilmDetail = ( film? : IFilmDetail) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -9,20 +10,13 @@ const useFilmDetail = ( film? : IFilmDetail) => {
     useEffect(() => {
       const fetchFilmDetail = async (film : IFilmDetail) => {
         try {
-          const [year] = film.release_date.split('-');
-          const response = await fetch(`http://www.omdbapi.com/?apikey=b9a5e69d&t=${film.title}&y=${year}&plot=full`);
-          const res = await response.json();
-          if (!response.ok) {
-            setError(res.message);
-            setIsLoading(false);
-            return;
-          }
+          const {title, release_date } = film
+          const res = await getFilmDetail({title,release_date})
           setData(res);
-          setIsLoading(false);
         } catch (error : any ) {
           setError(error.message);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       };
       if(film) {
         fetchFilmDetail(film);
