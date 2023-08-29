@@ -1,8 +1,10 @@
-export const options = [{
+export const options = [
+  {
     value: 'episode_id',
-    label: "Film"
-},
-{
+    label: 'Film',
+  },
+  {
     value: 'release_date',
-    label: "Release Date"
-}]
+    label: 'Release Date',
+  },
+]

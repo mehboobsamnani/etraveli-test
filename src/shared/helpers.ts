@@ -15,21 +15,20 @@ export function romanize(num: number): string {
     [9, 'IX'],
     [5, 'V'],
     [4, 'IV'],
-    [1, 'I']
-  ];
+    [1, 'I'],
+  ]
 
-  let result = '';
+  let result = ''
 
   for (const [value, symbol] of romanNumerals) {
     while (num >= value) {
-      result += symbol;
-      num -= value;
+      result += symbol
+      num -= value
     }
   }
 
-  return result;
+  return result
 }
-
 
 export const localStorageFn = {
   getItem: (key: string) => {
@@ -37,10 +36,9 @@ export const localStorageFn = {
     if (item) {
       return JSON.parse(item)
     }
-    return ""
+    return ''
   },
   setItem: (key: string, value: any) => {
     localStorage.setItem(key, JSON.stringify(value))
   },
-
-} 
+}

@@ -8,16 +8,16 @@ describe('useFilms Hook', () => {
         {
           title: 'Film A',
           episode_id: 1,
-          release_date: '2000-01-01'
-        }
-      ]
+          release_date: '2000-01-01',
+        },
+      ],
     }
 
     const mockJsonPromise = Promise.resolve(mockData)
 
     const mockFetchPromise = Promise.resolve({
       ok: true,
-      json: () => mockJsonPromise
+      json: () => mockJsonPromise,
     })
 
     global.fetch = jest.fn().mockResolvedValue(mockFetchPromise)
@@ -27,7 +27,7 @@ describe('useFilms Hook', () => {
     const { result } = renderHook(() => useFilms())
 
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     })
     expect(result.current.isLoading).toBe(false)
     expect(result.current.error).toBeNull()
@@ -35,15 +35,15 @@ describe('useFilms Hook', () => {
       {
         title: 'Film A',
         episode_id: 1,
-        release_date: '2000-01-01'
-      }
+        release_date: '2000-01-01',
+      },
     ])
   })
 
   it('should handle fetch error', async () => {
     const mockFetchPromise = Promise.resolve({
       ok: false,
-      json: jest.fn().mockRejectedValue({ message: 'Error message' })
+      json: jest.fn().mockRejectedValue({ message: 'Error message' }),
     })
 
     global.fetch = jest.fn().mockResolvedValue(mockFetchPromise)
@@ -51,7 +51,7 @@ describe('useFilms Hook', () => {
     const { result } = renderHook(() => useFilms())
 
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     })
     expect(result.current.isLoading).toBe(false)
     expect(result.current.error).toBe('Error message')

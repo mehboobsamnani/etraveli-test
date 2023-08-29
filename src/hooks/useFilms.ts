@@ -8,13 +8,16 @@ const useFilms = () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    getFilms().then((res)=> {
-      setData(res.results)
-    }).catch((error : any)=>{
-      setError(error.message)
-    }).finally(()=> {
-      setIsLoading(false)
-    })
+    getFilms()
+      .then((res) => {
+        setData(res.results)
+      })
+      .catch((error: any) => {
+        setError(error.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [])
 
   return { isLoading, data, error }

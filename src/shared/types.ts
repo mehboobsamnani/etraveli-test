@@ -17,5 +17,3 @@ export interface IFilmDetail {
   episode_id: number
   director: string
 }
-
-
