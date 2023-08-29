@@ -8,16 +8,14 @@ const mockLists: IFilmDetail[] = [
     episode_id: 2,
     release_date: '2000-01-01',
     opening_crawl: '',
-    ratings: [],
-    director: ''
+    director:'',
   },
   {
     title: 'Film B',
     episode_id: 1,
     release_date: '2001-01-01',
     opening_crawl: '',
-    ratings: [],
-    director: ''
+    director:'',
   }
 ]
 

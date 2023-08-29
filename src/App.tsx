@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { getFilmDetail } from './services/api'
 import {
@@ -10,35 +10,23 @@ import {
 } from './components'
 import { IFilmDetail } from './shared/types'
 import { options } from './constants'
-import { useSort, useFilter, useFilms } from './hooks'
+import { useSort, useFilter, useFilms, useFilmDetail } from './hooks'
 function App() {
-  const [selectedFilm, setSelectedFilm] = useState<IFilmDetail | null>(null)
+
+  const [selectedFilm, setSelectedFilm] = useState<IFilmDetail>()
   const { isLoading, data: films, error } = useFilms()
+
+  const { data: filmDetails, error: filmError } = useFilmDetail(selectedFilm)
   const [searchTerm, setSearchTerm] = useState('')
   const { sortedData, sortData } = useSort(films, 'episode_id')
   const { filteredList } = useFilter(sortedData, searchTerm)
 
-  const setFilmDetails = async (selectedFilm: any) => {
-    try {
-      const res = await getFilmDetail(selectedFilm)
-      setSelectedFilm({
-        ...selectedFilm,
-        ratings: res.Ratings,
-        poster: res.Poster
-      })
-    } catch (e) {
-      console.log('error', e)
-    }
-  }
-
   const handleClick = (film: IFilmDetail) => {
     if(film.episode_id === selectedFilm?.episode_id) {
-      setSelectedFilm(null)
+      setSelectedFilm(undefined)
       return
     }
-    
     setSelectedFilm(film)
-    setFilmDetails(film)
   }
 
   const handleSortChange = (selectedValue: string) => {
@@ -48,9 +36,9 @@ function App() {
   return (
     <div className="app" data-testid="app">
       {isLoading && <PageLoader />}
-      {error && (
+      {(error || filmError) && (
         <p data-testid="error" className="error">
-          Failed to load Data
+          {error || filmError}
         </p>
       )}
 
@@ -66,7 +54,7 @@ function App() {
         films={filteredList}
         selectedFilm={selectedFilm}
       />
-      <FilmDetails film={selectedFilm} />
+      <FilmDetails film={selectedFilm} metaDetails={filmDetails} />
     </div>
   )
 }

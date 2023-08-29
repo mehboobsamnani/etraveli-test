@@ -14,13 +14,8 @@ export interface IFilmDetail {
   title: string
   opening_crawl: string
   release_date: string
-  poster?: string
   episode_id: number
-  ratings: Rating[]
   director: string
 }
 
-interface Rating {
-  Source: string
-  Value: string
-}
+

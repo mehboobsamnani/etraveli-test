@@ -4,15 +4,27 @@ import { romanize } from 'shared/helpers'
 import Ratings from '../Ratings'
 import Pill from 'components/Pill'
 import styles from "./FilmDetails.module.css"
+
+interface MetaDetails {
+  ratings: Rating[]
+  poster: string
+}
+interface Rating {
+  Source: string
+  Value: string
+}
 interface MovieDetailProps {
-  film: IFilmDetail | null
+  film?: IFilmDetail
+  metaDetails: MetaDetails
 }
 
-const FilmDetails: React.FC<MovieDetailProps> = ({ film }) => {
-  const { title, opening_crawl, poster, director, ratings = [] } = film || {}
+const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails  }) => {
+  const { title, opening_crawl,  director  } = film || {}
+
+  const { ratings = [], poster} = metaDetails
 
   const totalScore = useMemo(() => {
-    if (!ratings.length) {
+    if (ratings && !ratings.length) {
       return 0
     }
 

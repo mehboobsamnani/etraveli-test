@@ -1,6 +1,8 @@
 import { IFilmDetail } from 'shared/types'
-
-const getFilms = async () => {
+interface ApiResponse {
+  results: any;
+}
+const getFilms = async () :  Promise<ApiResponse>  => {
   return getFetch('https://swapi.dev/api/films/?format=json')
 }
 

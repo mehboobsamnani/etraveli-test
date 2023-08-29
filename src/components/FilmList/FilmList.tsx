@@ -4,7 +4,7 @@ import styles from "./FilmList.module.css"
 interface FilmListProps {
   films: IFilmDetail[]
   onClick: (film: IFilmDetail) => void
-  selectedFilm: IFilmDetail | null
+  selectedFilm?: IFilmDetail
 }
 
 const FilmList: React.FC<FilmListProps> = ({
