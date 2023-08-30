@@ -12,7 +12,7 @@ const getFilmDetail = async ({
 }: Pick<IFilmDetail, 'title' | 'release_date'>) => {
   const [year] = release_date.split('-')
   return getFetch(
-    `http://www.omdbapi.com/?apikey=b9a5e69d&t=${title}&y=${year}&plot=full`
+    `https://www.omdbapi.com/?apikey=b9a5e69d&t=${title}&y=${year}&plot=full`
   )
 }
 
