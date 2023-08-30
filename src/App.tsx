@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="app" data-testid="app">
-      {isLoading && <PageLoader />}
+      
       {(error || filmError) && (
         <p data-testid="error" className="error">
           {error || filmError}
@@ -48,12 +48,15 @@ function App() {
         currentValue="episode_id"
       />
       <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Films
-        onClick={handleClick}
-        films={filteredList}
-        selectedFilm={selectedFilm}
-      />
-      <FilmDetails film={selectedFilm} metaDetails={filmDetails} />
+      { isLoading ? <PageLoader /> : <>
+        <Films
+          onClick={handleClick}
+          films={filteredList}
+          selectedFilm={selectedFilm}
+        />
+        <FilmDetails film={selectedFilm} metaDetails={filmDetails} />
+      </>
+      }
     </div>
   )
 }
