@@ -1,6 +1,6 @@
-# Swap API for Star wars and IMDB 
+# Stars war episode viewer
 
-> a web application that enables users to search for GitHub repositories based on their input.
+> for live demo click [here](https://mehboobsamnani.github.io/etraveli-test/)
 ## Installation
 
 1. Clone the repository:
