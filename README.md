@@ -39,5 +39,5 @@ Cypress is used for end-to-end testing. To run the Cypress tests, follow these s
    npm run start
 2. In a separate terminal, run the Cypress tests:
     ```bash
-    cd graphql-react
+    cd etraveli-test
     npm run cy:run
