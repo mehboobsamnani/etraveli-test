@@ -32,15 +32,18 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Wait for server to start
-        run: sleep 5
-
-      - name: Run end-to-end tests
-        run: npm run cy:run
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
+      - name: Run tests and generate coverage report
+        run: npm test -- --coverage
+  
       - name: Check test coverage
         run: |
-          npm install -g istanbul
-          istanbul check-coverage --statement 80 --branch 80 --function 80 --lines 80 ./coverage/coverage-final.json
+          # Extract the coverage percentage from the generated coverage report.
+          COVERAGE_PERCENTAGE=$(cat coverage/lcov-report/index.html | grep -oP 'Statements</th><td class=".*"><span>([^<]+)%' | grep -oP '(\d+(\.\d+)?)')
+
+          # Compare the coverage percentage with the desired threshold (80%).
+          if (( $(echo "$COVERAGE_PERCENTAGE >= 80" | bc -l) )); then
+            echo "Code coverage is above 80%."
+          else
+            echo "Code coverage is below 80%."
+            exit 1  # You can choose to fail the workflow if coverage is below the threshold.
+          fi

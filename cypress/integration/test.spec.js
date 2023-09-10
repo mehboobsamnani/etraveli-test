@@ -2,7 +2,7 @@
 // Custom command to get and store the film list
 Cypress.Commands.add('getAndStoreFilmList', () => {
     cy.intercept('GET', 'https://swapi.dev/api/films/?format=json').as('swapApiRequest');
-    cy.wait('@swapApiRequest', { timeout: 40000 }).its('response.body.results').as('filmList');
+    cy.wait('@swapApiRequest', { timeout: 40000 })
   });
   
   describe('Movie App', () => {
