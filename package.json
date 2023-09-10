@@ -2,7 +2,6 @@
   "name": "frontend-boilerplate-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mehboobsamnani.github.io/etraveli-test/",
   "dependencies": {
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.33.0",
