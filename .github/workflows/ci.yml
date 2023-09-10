@@ -33,12 +33,12 @@ jobs:
         run: npm run test
 
       - name: Run tests and generate coverage report
-        run: npm test -- --coverage
+        run: npm run test:cover
   
       - name: Check test coverage
         run: |
           # Extract the coverage percentage from the generated coverage report.
-          COVERAGE_PERCENTAGE=$(cat coverage/lcov-report/index.html | grep -oP 'Statements</th><td class=".*"><span>([^<]+)%' | grep -oP '(\d+(\.\d+)?)')
+          COVERAGE_PERCENTAGE=$(grep -oP '<span class="strong">\K\d+\.\d+' coverage/lcov-report/index.html | head -n1)
 
           # Compare the coverage percentage with the desired threshold (80%).
           if (( $(echo "$COVERAGE_PERCENTAGE >= 80" | bc -l) )); then
