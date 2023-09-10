@@ -6,8 +6,8 @@ import Pill from 'components/Pill'
 import styles from "./FilmDetails.module.css"
 
 interface MetaDetails {
-  ratings: Rating[]
-  poster: string
+  Ratings: Rating[]
+  Poster: string
 }
 interface Rating {
   Source: string
@@ -18,10 +18,10 @@ interface MovieDetailProps {
   metaDetails: MetaDetails
 }
 
-const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails  }) => {
+const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails   }) => {
   const { title, opening_crawl,  director  } = film || {}
 
-  const { ratings = [], poster} = metaDetails
+  const { Ratings : ratings = [], Poster : poster} = metaDetails
 
   const totalScore = useMemo(() => {
     if (ratings && !ratings.length) {
@@ -78,4 +78,10 @@ const FilmDetails: React.FC<MovieDetailProps> = ({ film , metaDetails  }) => {
   )
 }
 
+FilmDetails.defaultProps = {
+  metaDetails : {
+    Ratings :[],
+    Poster: ''
+  }
+}
 export default FilmDetails

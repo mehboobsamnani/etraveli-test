@@ -2,13 +2,17 @@
   "name": "frontend-boilerplate-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mehboobsamnani.github.io/etraveli-test/",
   "dependencies": {
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^16.18.14",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "gh-pages": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -16,6 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -54,10 +60,11 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.0.0",
+    "@tanstack/eslint-plugin-query": "^4.34.1",
     "@types/jest": "^29.5.4",
     "cypress": "^9.7.0",
-    "husky": "^8.0.3",
     "eslint-plugin-cypress": "^2.0.1",
+    "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2"
   }

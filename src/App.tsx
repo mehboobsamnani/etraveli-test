@@ -1,27 +1,40 @@
 import { useState } from 'react'
+import {
+  useQuery,
+} from '@tanstack/react-query'
+
 import './App.css'
 import {
   Dropdown,
   FilmDetails,
   Films,
   PageLoader,
-  SearchFilter
+  SearchFilter,
+  Error
 } from './components'
 import { IFilmDetail } from './shared/types'
 import { options } from './constants'
-import { useSort, useFilter, useFilms, useFilmDetail } from './hooks'
+import { useSort, useFilter, useFilmsQuery } from './hooks'
+import { films, filmDetails } from 'services/api'
+
 function App() {
 
   const [selectedFilm, setSelectedFilm] = useState<IFilmDetail>()
-  const { isLoading, data: films, error } = useFilms()
 
-  const { data: filmDetails, error: filmError } = useFilmDetail(selectedFilm)
+  const { error, data, isLoading } = useFilmsQuery()
+
+  const { error: filmError, data: metaDetails } = useQuery({
+    enabled: !!selectedFilm,
+    queryKey: ['filmDetail', selectedFilm?.episode_id, selectedFilm?.title],
+    queryFn: () => selectedFilm && filmDetails(selectedFilm)
+  })
+  
   const [searchTerm, setSearchTerm] = useState('')
-  const { sortedData, sortData } = useSort(films, 'episode_id')
+  const { sortedData, sortData } = useSort(data?.results, 'episode_id')
   const { filteredList } = useFilter(sortedData, searchTerm)
 
   const handleClick = (film: IFilmDetail) => {
-    if(film.episode_id === selectedFilm?.episode_id) {
+    if (film.episode_id === selectedFilm?.episode_id) {
       setSelectedFilm(undefined)
       return
     }
@@ -34,13 +47,7 @@ function App() {
 
   return (
     <div className="app" data-testid="app">
-      
-      {(error || filmError) && (
-        <p data-testid="error" className="error">
-          {error || filmError}
-        </p>
-      )}
-
+      <Error err={[error as Error, filmError as Error]} />
       <Dropdown
         label="Sort By"
         options={options}
@@ -48,13 +55,13 @@ function App() {
         currentValue="episode_id"
       />
       <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      { isLoading ? <PageLoader /> : <>
+      {isLoading ? <PageLoader /> : <>
         <Films
           onClick={handleClick}
           films={filteredList}
           selectedFilm={selectedFilm}
         />
-        <FilmDetails film={selectedFilm} metaDetails={filmDetails} />
+        <FilmDetails film={selectedFilm} metaDetails={metaDetails} />
       </>
       }
     </div>

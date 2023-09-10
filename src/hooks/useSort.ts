@@ -13,6 +13,9 @@ const useSort = (
   }, [initialData])
 
   const sortedData = useMemo(() => {
+    if (!data || !data.length) {
+      return []
+    }
     const sortedArray = [...data].sort((a, b) => {
       const aValue = a[sortKey]
       const bValue = b[sortKey]

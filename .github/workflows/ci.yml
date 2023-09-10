@@ -39,3 +39,8 @@ jobs:
         run: npm run cy:run
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Check test coverage
+        run: |
+          npm install -g istanbul
+          istanbul check-coverage --statement 80 --branch 80 --function 80 --lines 80 ./coverage/coverage-final.json

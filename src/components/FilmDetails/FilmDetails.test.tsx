@@ -10,8 +10,8 @@ const mockEpisode = {
   episode_id: 1
 }
 const mockMetaDetail = {
-  poster: 'poster-url',
-  ratings: [
+  Poster: 'poster-url',
+  Ratings: [
     { Source: 'Internet Movie Database', Value: '7.5/10' },
     { Source: 'Rotten Tomatoes', Value: '75%' },
     { Source: 'Metacritic', Value: '75/100' }

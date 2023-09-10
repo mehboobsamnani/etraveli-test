@@ -1,6 +1,6 @@
 import useSort from './useSort'
 import useFilter from './useFilter'
 import useFilms from './useFilms'
-import useFilmDetail from './useFilmDetail'
+import {useFilmsQuery} from './useFilmsQuery'
 
-export { useSort, useFilter, useFilms, useFilmDetail }
+export { useSort, useFilter, useFilms, useFilmsQuery }

@@ -1,8 +1,21 @@
 import { render, fireEvent, screen } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
 import { act } from 'react-dom/test-utils' //
 import App from './App'
 import * as api from './services/api'
+import { useFilmsQuery } from "./hooks";
 
+const mockedUseUsersQuery = useFilmsQuery as jest.Mock;
+jest.mock("./hooks/useFilmsQuery");
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 describe('App Component', () => {
   // Mocked data for testing
   const mockFilms = [
@@ -26,14 +39,20 @@ describe('App Component', () => {
   // Set up mocks before each test
   beforeEach(() => {
     // Mock the getFilms function
-    jest.spyOn(api, 'getFilms').mockResolvedValue({ results: mockFilms })
-
+    mockedUseUsersQuery.mockImplementation(() => ({
+      isLoading: false,
+      data : { results: mockFilms },
+    }));
     // Mock the getFilmDetail function using jest.spyOn
-    jest.spyOn(api, 'getFilmDetail').mockResolvedValue(mockFilmDetail)
+    jest.spyOn(api, 'filmDetails').mockResolvedValue(mockFilmDetail)
   })
-
+  const AppComponent = 
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>
+  
   test('renders the App component', async () => {
-    render(<App />)
+    render( AppComponent)
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 1000))
     })
@@ -46,16 +65,18 @@ describe('App Component', () => {
     expect(episodeOne).toBeInTheDocument()
   })
 
-  test('displays error when useFilms returns an error', async () => {
+  test('displays error when films returns an error', async () => {
     const error = "Error Message"
-    jest.spyOn(api, 'getFilms').mockRejectedValue({ message: error })
+    mockedUseUsersQuery.mockImplementation(() => ({
+      isLoading: false,
+      error: new Error(error),
+    }));
 
-    render(<App />)
+    render(AppComponent)
 
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 1000))
     })
-
     const errorMessage = screen.getByText(error)
     expect(errorMessage).toBeInTheDocument()
   })
